@@ -173,7 +173,7 @@ Songs can also be exported from the detail view. The export button downloads a p
 
 The JSON intentionally excludes internal `id` fields. IDs are generated when the app reads a portable song. This keeps exported files clean and lets the same format be used for preloaded songs in `src/song-library/`.
 
-At startup, preloaded songs are merged into saved songs by song name. That means adding a new JSON file to `src/song-library/` and importing it from `src/songs.ts` makes it available without duplicating user-edited songs that already exist in `localStorage`.
+At startup, preloaded songs are merged into saved songs by song name. Vite's `import.meta.glob` scans `src/song-library/*.json`, so adding or renaming a JSON file in that folder makes it available without editing imports in `src/songs.ts`. This works in the browser because Vite converts the folder scan into a static import map during dev/build.
 
 ### Song Practice Playback
 

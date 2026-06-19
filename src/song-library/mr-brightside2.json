@@ -1,0 +1,67 @@
+{
+  "name": "Mr Brightside 2",
+  "bpm": 148,
+  "rhythmId": "4-4",
+  "structure": [
+    {
+      "name": "Intro",
+      "bars": 4
+    },
+    {
+      "name": "Verse 1",
+      "bars": 8
+    },
+    {
+      "name": "Verse 2",
+      "bars": 8
+    },
+    {
+      "name": "Pre-chorus 1",
+      "bars": 12
+    },
+    {
+      "name": "Instrumental",
+      "bars": 4
+    },
+    {
+      "name": "Chorus",
+      "bars": 16
+    },
+    {
+      "name": "Bridge",
+      "bars": 8
+    },
+    {
+      "name": "Verse 6 + 1/2 - Pause",
+      "bars": 7
+    },
+    {
+      "name": "Pause + fill",
+      "bars": 1
+    },
+    {
+      "name": "Verse",
+      "bars": 8
+    },
+    {
+      "name": "Pre-chorus",
+      "bars": 12
+    },
+    {
+      "name": "Instrumental",
+      "bars": 4
+    },
+    {
+      "name": "Final Chorus",
+      "bars": 16
+    },
+    {
+      "name": "Outro",
+      "bars": 8
+    },
+    {
+      "name": "Outro2",
+      "bars": 16
+    }
+  ]
+}

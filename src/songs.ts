@@ -1,5 +1,3 @@
-import mrBrightside from './song-library/mr-brightside.json';
-
 export type SongSection = {
   id: string;
   name: string;
@@ -70,9 +68,12 @@ export const portableSongFromSong = (song: Song): PortableSong => ({
   })),
 });
 
-export const PRELOADED_SONGS: Song[] = [
-  songFromPortableSong(mrBrightside),
-];
+const preloadedSongFiles = import.meta.glob<PortableSong>('./song-library/*.json', {
+  eager: true,
+  import: 'default',
+});
+
+export const PRELOADED_SONGS: Song[] = Object.values(preloadedSongFiles).map(songFromPortableSong);
 
 export const DEMO_SONGS: Song[] = [
   ...PRELOADED_SONGS,
