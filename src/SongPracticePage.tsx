@@ -64,7 +64,7 @@ function SongPracticePage({
             ))}
           </div>
         ) : null}
-        <p>
+        <p className="practice-bar-count">
           {isCountIn
             ? `Count-in bar ${currentBarInSection} of 2`
             : currentSection && !isComplete

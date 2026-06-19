@@ -571,10 +571,14 @@ select {
 
 .practice-progress p {
   color: rgba(255, 255, 255, 0.72);
-  font-size: 1.2rem;
   font-weight: 800;
   margin: 0;
   text-align: center;
+}
+
+.practice-bar-count {
+  font-size: clamp(1.8rem, 5vw, 3.4rem);
+  line-height: 1;
 }
 
 .practice-beats .beat-dot {
