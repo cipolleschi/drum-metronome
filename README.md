@@ -47,6 +47,7 @@ The initial files were then refined manually:
 - `src/vite-env.d.ts` adds Vite's ambient client types so TypeScript understands CSS imports like `import './styles.css'`.
 - The rhythm-change reset lives in `setRhythm` instead of a `useEffect`, because it is a direct result of the user action and avoids React's `set-state-in-effect` lint warning.
 - `src/songs.ts` contains the song data model, demo data, and conversion helpers for create/edit forms.
+- `src/song-library/` contains preloaded song JSON files that use the same portable format as exported songs.
 - `src/SongsPage.tsx` contains the song library UI: saved songs, selected song details, and create/edit controls.
 - `src/songPlayer.ts` contains song-practice playback timing, including section advancement and the automatic count-in.
 - `src/SongPracticePage.tsx` contains the immersive practice screen shown while a song is playing.
@@ -94,6 +95,7 @@ src/
   metronome.ts   Rhythm data and reusable metronome hook
   songPlayer.ts  Song playback hook for count-in, bar tracking, and section changes
   songs.ts       Song types, demo song data, and song draft helpers
+  song-library/  Preloaded song JSON files
   SongPracticePage.tsx Full-screen song playback UI
   SongsPage.tsx  Song list, detail, create, edit, and delete UI
   styles.css     App styling
@@ -155,6 +157,24 @@ The section editor supports two structure-editing workflows:
 - Drag a section row to another row to reorder the structure. This uses native browser drag and drop instead of adding another dependency.
 - Press `Enter` in a section's bars input to create a new section immediately after that row.
 
+Songs can also be exported from the detail view. The export button downloads a portable JSON file with this shape:
+
+```json
+{
+  "name": "Mr. Brightside",
+  "bpm": 148,
+  "rhythmId": "4-4",
+  "structure": [
+    { "name": "Intro", "bars": 8 },
+    { "name": "Verse 1", "bars": 16 }
+  ]
+}
+```
+
+The JSON intentionally excludes internal `id` fields. IDs are generated when the app reads a portable song. This keeps exported files clean and lets the same format be used for preloaded songs in `src/song-library/`.
+
+At startup, preloaded songs are merged into saved songs by song name. That means adding a new JSON file to `src/song-library/` and importing it from `src/songs.ts` makes it available without duplicating user-edited songs that already exist in `localStorage`.
+
 ### Song Practice Playback
 
 Songs can be started from the song detail view with the play button. Starting a song switches the app to a dedicated practice screen:
@@ -208,6 +228,8 @@ For rhythms like `6/8`, the app treats the lower number as the beat unit. That m
 - Song sections can be inserted between existing sections.
 - Song sections can be reordered with drag and drop.
 - Pressing `Enter` in a section bars input inserts the next section.
+- Songs can be exported as portable JSON.
+- Preloaded songs can be added from `src/song-library/` using the same JSON format.
 - Songs persist in browser `localStorage`.
 - Song play button opens a full-screen practice view.
 - Song playback includes two automatic count-in bars.

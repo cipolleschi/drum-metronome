@@ -1,0 +1,18 @@
+{
+  "name": "Mr. Brightside",
+  "bpm": 148,
+  "rhythmId": "4-4",
+  "structure": [
+    { "name": "Intro", "bars": 8 },
+    { "name": "Verse 1", "bars": 16 },
+    { "name": "Pre-chorus 1", "bars": 8 },
+    { "name": "Chorus 1", "bars": 8 },
+    { "name": "Instrumental", "bars": 8 },
+    { "name": "Verse 2", "bars": 16 },
+    { "name": "Pre-chorus 2", "bars": 8 },
+    { "name": "Chorus 2", "bars": 8 },
+    { "name": "Bridge / Breakdown", "bars": 8 },
+    { "name": "Final chorus", "bars": 16 },
+    { "name": "Outro", "bars": 8 }
+  ]
+}

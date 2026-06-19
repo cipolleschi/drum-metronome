@@ -4,7 +4,7 @@ import { RHYTHMS, useMetronome } from './metronome';
 import SongPracticePage from './SongPracticePage';
 import { useSongPlayer } from './songPlayer';
 import SongsPage from './SongsPage';
-import { DEMO_SONGS, type Song } from './songs';
+import { DEMO_SONGS, PRELOADED_SONGS, type Song } from './songs';
 
 type Page = 'metronome' | 'songs' | 'practice';
 
@@ -15,6 +15,13 @@ type SongState = {
   selectedSongId: string | null;
 };
 
+const mergePreloadedSongs = (songs: Song[]) => {
+  const savedSongNames = new Set(songs.map((song) => song.name.trim().toLowerCase()));
+  const missingPreloadedSongs = PRELOADED_SONGS.filter((song) => !savedSongNames.has(song.name.trim().toLowerCase()));
+
+  return [...missingPreloadedSongs, ...songs];
+};
+
 const loadSongs = (): Song[] => {
   const storedSongs = window.localStorage.getItem(SONG_STORAGE_KEY);
 
@@ -23,7 +30,7 @@ const loadSongs = (): Song[] => {
   }
 
   try {
-    return JSON.parse(storedSongs) as Song[];
+    return mergePreloadedSongs(JSON.parse(storedSongs) as Song[]);
   } catch {
     return DEMO_SONGS;
   }

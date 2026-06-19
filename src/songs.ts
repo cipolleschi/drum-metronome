@@ -1,3 +1,5 @@
+import mrBrightside from './song-library/mr-brightside.json';
+
 export type SongSection = {
   id: string;
   name: string;
@@ -19,6 +21,18 @@ export type SongDraft = {
   structure: SongSection[];
 };
 
+export type PortableSongSection = {
+  name: string;
+  bars: number;
+};
+
+export type PortableSong = {
+  name: string;
+  bpm: number;
+  rhythmId: string;
+  structure: PortableSongSection[];
+};
+
 export const createId = () => {
   if (typeof crypto !== 'undefined' && 'randomUUID' in crypto) {
     return crypto.randomUUID();
@@ -34,7 +48,34 @@ export const createEmptySongDraft = (): SongDraft => ({
   structure: [{ id: createId(), name: 'Intro', bars: 4 }],
 });
 
+export const songFromPortableSong = (portableSong: PortableSong): Song => ({
+  id: createId(),
+  name: portableSong.name,
+  bpm: portableSong.bpm,
+  rhythmId: portableSong.rhythmId,
+  structure: portableSong.structure.map((section) => ({
+    id: createId(),
+    name: section.name,
+    bars: section.bars,
+  })),
+});
+
+export const portableSongFromSong = (song: Song): PortableSong => ({
+  name: song.name,
+  bpm: song.bpm,
+  rhythmId: song.rhythmId,
+  structure: song.structure.map((section) => ({
+    name: section.name,
+    bars: section.bars,
+  })),
+});
+
+export const PRELOADED_SONGS: Song[] = [
+  songFromPortableSong(mrBrightside),
+];
+
 export const DEMO_SONGS: Song[] = [
+  ...PRELOADED_SONGS,
   {
     id: createId(),
     name: 'Practice Song',

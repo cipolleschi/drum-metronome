@@ -1,10 +1,11 @@
-import { Edit3, GripVertical, Play, Plus, Save, Trash2, X } from 'lucide-react';
+import { Download, Edit3, GripVertical, Play, Plus, Save, Trash2, X } from 'lucide-react';
 import { Fragment, useMemo, useState } from 'react';
 import { RHYTHMS } from './metronome';
 import {
   createEmptySongDraft,
   createId,
   draftFromSong,
+  portableSongFromSong,
   songFromDraft,
   type Song,
   type SongDraft,
@@ -31,6 +32,20 @@ type EditorState = {
 const getRhythmLabel = (rhythmId: string) => RHYTHMS.find((rhythm) => rhythm.id === rhythmId)?.label ?? rhythmId;
 
 const getTotalBars = (song: Song) => song.structure.reduce((total, section) => total + section.bars, 0);
+
+const getExportFileName = (song: Song) => `${song.name.trim().toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/(^-|-$)/g, '') || 'song'}.json`;
+
+const exportSong = (song: Song) => {
+  const json = JSON.stringify(portableSongFromSong(song), null, 2);
+  const blob = new Blob([json], { type: 'application/json' });
+  const downloadUrl = URL.createObjectURL(blob);
+  const link = document.createElement('a');
+
+  link.href = downloadUrl;
+  link.download = getExportFileName(song);
+  link.click();
+  URL.revokeObjectURL(downloadUrl);
+};
 
 function SongsPage({
   songs,
@@ -150,6 +165,9 @@ function SongsPage({
               <div className="detail-actions">
                 <button className="icon-button compact primary" type="button" aria-label="Play song" title="Play song" onClick={() => onPlaySong(selectedSong)}>
                   <Play size={18} fill="currentColor" />
+                </button>
+                <button className="icon-button compact" type="button" aria-label="Export song" title="Export song" onClick={() => exportSong(selectedSong)}>
+                  <Download size={18} />
                 </button>
                 <button className="icon-button compact" type="button" aria-label="Edit song" title="Edit song" onClick={() => startEdit(selectedSong)}>
                   <Edit3 size={18} />
